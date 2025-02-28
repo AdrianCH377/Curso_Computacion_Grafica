@@ -1,3 +1,8 @@
+// CRUZ HERNANDEZ SANTIAGO ADRIAN
+// NUMERO DE CUENTA 318103273
+//FECHA DE ENTREGA 27 FEBRERO 2025
+//PRACTICA 4
+
 #include<iostream>
 
 //#define GLEW_STATIC
@@ -88,7 +93,7 @@ int main() {
 		0.5f,  0.5f, 0.5f,  1.0f, 0.0f,0.0f,
 		-0.5f,  0.5f, 0.5f, 1.0f, 0.0f,0.0f,
 		-0.5f, -0.5f, 0.5f, 1.0f, 0.0f,0.0f,
-		
+
 	    -0.5f, -0.5f,-0.5f, 0.0f, 1.0f,0.0f,//Back
 		 0.5f, -0.5f,-0.5f, 0.0f, 1.0f,0.0f,
 		 0.5f,  0.5f,-0.5f, 0.0f, 1.0f,0.0f,
@@ -124,8 +129,6 @@ int main() {
 		-0.5f,  0.5f,  0.5f, 1.0f, 0.2f,0.5f,
 		-0.5f,  0.5f, -0.5f, 1.0f, 0.2f,0.5f,
 	};
-
-
 
 
 	GLuint VBO, VAO;
@@ -172,7 +175,7 @@ int main() {
 
 		// Render
 		// Clear the colorbuffer
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
 
 
@@ -197,42 +200,188 @@ int main() {
 
 		glBindVertexArray(VAO);
 	
-	    model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(3.0f, 0.25f, 2.0f)); //Ancho , grosor , profundidad
-		model = glm::translate(model, glm::vec3(0.0f, 0.1f, 0.0f));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-	
+	   
+		GLuint objectColorLoc = glGetUniformLocation(ourShader.Program, "objectColor");
+
+
+		// Cabeza
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f,1.0f, 0.1f)); //tamaño de la pata
-		model = glm::translate(model, glm::vec3(15.0f, -0.6f, 8.9f)); //posion la pata
+		model = glm::scale(model, glm::vec3(0.8f, 0.8f, 0.8f)); // tamaño de la cabeza (más pequeña que el torso y el cuello)
+		model = glm::translate(model, glm::vec3(0.0f, 1.8f, 0.0f)); // posición de la cabeza encima del cuello
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 1.0f, 0.8f, 0.6f); // color piel   PUREBAAA
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-	
-		//Pata 2
+
+
+		// Cuello
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 1.0f, 0.1f)); //tamaño de la pata
-		model = glm::translate(model, glm::vec3(-15.0f, -0.6f, 8.9f)); //posion la pata -2.9
+		model = glm::scale(model, glm::vec3(0.3f, 0.5f, 0.3f)); // tamaño del cuello (más pequeño que el torso)
+		model = glm::translate(model, glm::vec3(0.0f, 1.7f, 0.0f)); // posición del cuello encima del torso
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		//Pata 3
+		// Torso
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 1.f, 0.1f)); //tamaño de la pata
-		model = glm::translate(model, glm::vec3(-15.0f, -0.6f, -8.9f)); //posion la pata -2.9
+		model = glm::scale(model, glm::vec3(1.0f, 1.5f, 0.5f)); // tamaño del torso
+		model = glm::translate(model, glm::vec3(0.0f, 0.1f, 0.0f)); // posición del torso
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 0.0f, 0.0f, 1.0f); // color azul
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		//Pata 4
-		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 1.0f, 0.1f)); //tamaño de la pata
-		model = glm::translate(model, glm::vec3(15.0f, -0.6f, -8.9f)); //posion la pata 2.9
+	
+		// Brazo izquierdo
+		model = glm::mat4(1.0f);             
+		model = glm::scale(model, glm::vec3(0.2f, 0.5f, 0.3f)); // tamaño del brazo
+		model = glm::translate(model, glm::vec3(-3.2f, 0.4f, 0.0f)); // posición del brazo izquierdo
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 1.0f, 0.8f, 0.6f); // color piel
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		
+		// Brazo derecho
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.2f, 1.0f, 0.3f)); // tamaño del brazo
+		model = glm::translate(model, glm::vec3(3.2f, 0.2f, 0.0f)); // posición del brazo derecho
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// Pierna izquierda
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.3f, 1.0f, 0.3f)); // tamaño de la pierna
+		model = glm::translate(model, glm::vec3(-1.0f, -1.0f, 0.0f)); // Separar la pierna a la izquierda (cambia el valor -1.0f)
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 0.0f, 1.0f, 0.0f); // color verde
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// Pierna derecha
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.3f, 1.0f, 0.3f)); // tamaño de la pierna
+		model = glm::translate(model, glm::vec3(1.0f, -1.0f, 0.0f)); // Separar la pierna a la derecha (cambia el valor 1.0f)
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// Zapato izquierdo
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.4f, 0.2f, 0.6f)); // tamaño del zapato (más pequeño que la pierna)
+		model = glm::translate(model, glm::vec3(-1.0f, -7.5f, 0.0f)); // posición del zapato izquierdo
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 0.55f, 0.27f, 0.07f); //PRUEBAA
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// Zapato derecho
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.4f, 0.2f, 0.6f)); // tamaño del zapato (más pequeño que la pierna)
+		model = glm::translate(model, glm::vec3(1.0f, -7.5f, 0.0f)); // posición del zapato derecho
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// Mano izquierda
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f)); // tamaño de la mano (más pequeña que el brazo)
+		model = glm::translate(model, glm::vec3(-2.2f, -0.2f, -1.0f)); // posición de la mano izquierda al final del brazo
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 1.0f, 0.8f, 0.6f); // color piel
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//paleta
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.1f, 0.5f, 0.1f)); // tamaño de la mano (más pequeña que el brazo)
+		model = glm::translate(model, glm::vec3(-6.8f, 0.3f, -3.0f)); // posición de la mano izquierda al final del brazo
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 0.5f, 0.5f, 0.5f); // color gris
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//caramelo
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f)); // tamaño de la mano (más pequeña que el brazo)
+		model = glm::translate(model, glm::vec3(-3.4f, 2.0f, -1.5f)); // posición de la mano izquierda al final del brazo
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 1.0f, 0.0f, 0.0f); // color rojo
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
+		// Mano derecha
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f)); // tamaño de la mano (más pequeña que el brazo)
+		model = glm::translate(model, glm::vec3(2.2f, -0.7f, 0.0f)); // posición de la mano derecha al final del brazo
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 1.0f, 0.8f, 0.6f); // color piel
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//Manga izquierda
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f)); 
+		model = glm::translate(model, glm::vec3(-2.2f, 1.9f, 0.0f)); 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3f(objectColorLoc, 0.0f, 0.0f, 1.0f); // color azul
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// Manga derecha
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f)); 
+		model = glm::translate(model, glm::vec3(2.2f, 1.9f, 0.0f)); 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3f(objectColorLoc, 0.0f, 0.0f, 1.0f); // color azul
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// Oreja izquierda
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.2f, 0.4f, 0.2f)); // tamaño de la oreja (más pequeña que la cabeza)
+		model = glm::translate(model, glm::vec3(-1.9f, 3.5f, 0.0f)); // posición de la oreja izquierda al lado de la cabeza
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// Oreja derecha
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.2f, 0.4f, 0.2f)); // tamaño de la oreja (más pequeña que la cabeza)
+		model = glm::translate(model, glm::vec3(1.9f, 3.5f, 0.0f)); // posición de la oreja derecha al lado de la cabeza
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// ojo izquierdo
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f)); // tamaño de la mano (más pequeña que el brazo)
+		model = glm::translate(model, glm::vec3(-0.8f, 7.5f, -2.0f)); // posición de la mano izquierda al final del brazo
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 0.0f, 0.0f, 0.0f); //PRUEBAA
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//ojo claro
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f)); // tamaño de la mano (más pequeña que el brazo)
+		model = glm::translate(model, glm::vec3(-1.2f, 14.5f, -5.0f)); // posición de la mano izquierda al final del brazo
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 1.0f, 1.0f, 1.0f); //PRUEBAA
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		//
+
+	    //ojo claro 2 
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f)); // tamaño de la mano (más pequeña que el brazo)
+		model = glm::translate(model, glm::vec3(1.2f, 14.5f, -5.0f)); // posición de la mano izquierda al final del brazo
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 1.0f, 1.0f, 1.0f); //PRUEBAA
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		//
+
+
+		// ojo derecho
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f)); // tamaño de la mano (más pequeña que el brazo)
+		model = glm::translate(model, glm::vec3(0.8f, 7.5f, -2.0f)); // posición de la mano izquierda al final del brazo
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3f(objectColorLoc, 0.0f, 0.0f, 0.0f); //PRUEBAA
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+
+		//boca
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.5f, 0.1f, 0.2f)); // tamaño de la mano (más pequeña que el brazo)
+		model = glm::translate(model, glm::vec3(0.0f, 12.5f, -2.0f)); // posición de la mano izquierda al final del brazo
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//////////
+		
 		glBindVertexArray(0);
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
@@ -250,21 +399,23 @@ int main() {
 	 if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)  //GLFW_RELEASE
 		 glfwSetWindowShouldClose(window, true);
 	 if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		 movX += 0.08f;
+		 movX += 0.008f;
 	 if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		 movX -= 0.08f;
+		 movX -= 0.008f;
 	 if (glfwGetKey(window, GLFW_KEY_PAGE_UP) == GLFW_PRESS)
-		 movY += 0.08f;
+		 movY += 0.008f;
 	 if (glfwGetKey(window, GLFW_KEY_PAGE_DOWN) == GLFW_PRESS)
-		 movY -= 0.08f;
+		 movY -= 0.008f;
 	 if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		 movZ -= 0.08f;
+		 movZ -= 0.008f;
 	 if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		 movZ += 0.08f;
+		 movZ += 0.008f;
 	 if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		 rot += 0.4f;
+		 rot += 0.04f;
 	 if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		 rot -= 0.4f;
+		 rot -= 0.04f;
  }
+
+
 
 
