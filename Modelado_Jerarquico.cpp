@@ -1,9 +1,8 @@
 //MODELADO JERARQUICO
 //SANTIAGO ADRIAN CRUZ HERNANDEZ
 //NO. CUENTA: 318103273
-//FECHA DE ENTREGA:02/03/2025
+//FECHA DE ENTREGA:07/03/2025
 //LAB. COMPUTACIÓN GRAFICA GRUPO 1
-
 
 #include<iostream>
 #include <GL/glew.h>
@@ -11,7 +10,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
-
 
 // Shaders
 #include "Shader.h"
@@ -34,7 +32,9 @@ float muneca = 0.0f;
 float dedo1 = 0.0f;
 float dedo2 = 0.0f;
 float dedo3 = 0.0f;
-float dedo4 = 0.0f;
+float dedo4 = 0.0f; //se brinco al 3dedo
+float dedo5 = 0.0f;
+float dedo6 = 0.0f;
 
 int main() {
 	glfwInit();
@@ -93,8 +93,6 @@ int main() {
 	// use with Orthographic Projection
 
 
-	
-
 	// use with Perspective Projection
 	float vertices[] = {
 		-0.5f, -0.5f, 0.5f, 
@@ -141,8 +139,6 @@ int main() {
 	};
 
 
-
-
 	GLuint VBO, VAO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
@@ -183,16 +179,12 @@ int main() {
 		// Clear the colorbuffer
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
-
-
-		
+	
 		ourShader.Use();
 		glm::mat4 model=glm::mat4(1);
 		glm::mat4 view=glm::mat4(1);
 		glm::mat4 modelTemp = glm::mat4(1.0f); //Temp
 		glm::mat4 modelTemp2 = glm::mat4(1.0f); //Temp
-
-
 
 		//View set up 
 		view = glm::translate(view, glm::vec3(movX,movY, movZ));
@@ -225,7 +217,7 @@ int main() {
 		model = glm::rotate(model, glm::radians(codo), glm::vec3(0.0f, 1.0f, 0.0f));
 		modelTemp = model = glm::translate(model, glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(2.0f, 1.0f, 1.0f));
-		color = glm::vec3(1.0f, 0.0f, 0.0f);
+		color = glm::vec3(0.0f, 0.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);//B
@@ -239,50 +231,150 @@ int main() {
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);//C
-
-		//Model Dedo1 A
-		model = glm::translate(modelTemp, glm::vec3(0.25f, 0.35f, 0.375f));
-		model = glm::rotate(model, glm::radians(dedo1), glm::vec3(0.0f, 0.0f, 1.0f));
-		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.25f));
-		color = glm::vec3(0.0f, 1.0f, 1.0f);
+				
+		
+		//Dedo 1
+		model = glm::translate(modelTemp, glm::vec3(0.25f, 0.35f, 0.43f)); //Izq-Der, Arriba-Abajo, Adelante-Atras 
+		model = glm::rotate(model, glm::radians(dedo1), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación en z para que vaya de arriba-abajo
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(0.0f, 1.0f, 0.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);//D
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D 
 
-		//Model Dedo1 B
-		model = glm::translate(modelTemp, glm::vec3(0.5f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(dedo2), glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.25f));
-		color = glm::vec3(1.0f, 0.0f, 1.0f);
+		//Dedo 1 parte 2
+		model = glm::translate(modelTemp, glm::vec3(0.35f, 0.0f, 0.0f)); //Izq-Der, Arriba-Abajo, Adelante-Atras 
+		model = glm::rotate(model, glm::radians(dedo2), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación del codo 
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(0.7f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(1.0f, 0.0f, 0.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);//E
 
-		//Model Dedo3
-		model = glm::translate(modelTemp, glm::vec3(-0.45f,0.0f, -0.675f));
-		model = glm::rotate(model, glm::radians(dedo3), glm::vec3(0.0f, 0.0f, 1.0f));
-		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.25f));
-		color = glm::vec3(1.0f, 0.0f, 0.0f);
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);//F
-
-		//Model Dedo4
-		model = glm::translate(modelTemp, glm::vec3(0.5f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(dedo3), glm::vec3(0.0f, 0.0f, 1.0f));
-		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.25f));
+		// Dedo 1 parte 3 
+		model = glm::translate(modelTemp, glm::vec3(0.09f, 0.0f, 0.0f)); //Izq-Der, Arriba-Abajo, Adelante-Atras 
+		model = glm::rotate(model, glm::radians(dedo3), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación en z para que vaya de arriba-abajo
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(0.5f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);//G
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D 
+
+		//Dedo 3 PARTE1 --------------------------------------------------------
+		model = glm::translate(modelTemp2, glm::vec3(0.25f, 0.35f, -0.1f)); //Nos recorrimos 1.5 unidades para generar la palma
+		model = glm::rotate(model, glm::radians(dedo1), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación en z para que vaya de arriba-abajo
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(0.0f, 1.0f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D 
+
+		// DEDO 3 PARTE 2
+		model = glm::translate(modelTemp, glm::vec3(0.35f, 0.0f, 0.0f)); //Nos recorrimos 1.5 unidades para generar la palma
+		model = glm::rotate(model, glm::radians(dedo2), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación del codo 
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(0.7f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(1.0f, 0.0f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//E
+
+		// DEDO  3 parte 3 
+		model = glm::translate(modelTemp, glm::vec3(0.12f, 0.0f, 0.0f)); //Izq-Der, Arriba-Abajo, Adelante-Atras 
+		model = glm::rotate(model, glm::radians(dedo4), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación en z para que vaya de arriba-abajo
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(0.5f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D 
+
+		//DEDO 2 PARTE 1
+		model = glm::translate(modelTemp2, glm::vec3(0.25f, 0.35f, 0.2f)); //Nos recorrimos 1.5 unidades para generar la palma
+		model = glm::rotate(model, glm::radians(dedo1), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación en z para que vaya de arriba-abajo
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(0.0f, 1.0f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D 
+
+		//DEDO 2 PARTE 2
+		model = glm::translate(modelTemp, glm::vec3(0.35f, 0.0f, 0.0f)); //Nos recorrimos 1.5 unidades para generar la palma
+		model = glm::rotate(model, glm::radians(dedo2), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación del codo 
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(0.7f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(1.0f, 0.0f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//E
+
+		//DEDO 2 PARTE 3
+		model = glm::translate(modelTemp, glm::vec3(0.10f, 0.0f, 0.0f)); //Izq-Der, Arriba-Abajo, Adelante-Atras 
+		model = glm::rotate(model, glm::radians(dedo5), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación en z para que vaya de arriba-abajo
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(0.5f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D 
+
+		//DEDO 4 PARTE 1
+		model = glm::translate(modelTemp2, glm::vec3(0.25f, 0.35f, -0.4f)); //Nos recorrimos 1.5 unidades para generar la palma
+		model = glm::rotate(model, glm::radians(dedo1), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación en z para que vaya de arriba-abajo
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(0.0f, 1.0f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D 
+
+		//DEDO 4 PARTE 2
+		model = glm::translate(modelTemp, glm::vec3(0.35f, 0.0f, 0.0f)); //Nos recorrimos 1.5 unidades para generar la palma
+		model = glm::rotate(model, glm::radians(dedo2), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación del codo 
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(0.7f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(1.0f, 0.0f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//E
+
+		//DEDO 4 PARTE 3
+		model = glm::translate(modelTemp, glm::vec3(0.14f, 0.0f, 0.0f)); //Izq-Der, Arriba-Abajo, Adelante-Atras 
+		model = glm::rotate(model, glm::radians(dedo6), glm::vec3(0.0f, 0.0f, 1.0f));//Aplicamos la rotación en z para que vaya de arriba-abajo
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(0.5f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D
 
 
+		//Dedo PULGAR PARTE 1
+		model = glm::translate(modelTemp2, glm::vec3(0.25f, -0.3f, -0.4f)); //Izq-Der, Arriba-Abajo, Adelante-Atras
+		model = glm::rotate(model, glm::radians(dedo1), glm::vec3(0.0f, 1.0f, 0.0f));//Aplicamos la rotación en z para que vaya de arriba-abajo
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(0.0f, 1.0f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D 
 
+		//DEDO PULGAR  PARTE 2
+		model = glm::translate(modelTemp, glm::vec3(0.35f, 0.0f, 0.0f)); //Nos recorrimos 1.5 unidades para generar la palma
+		model = glm::rotate(model, glm::radians(dedo2), glm::vec3(0.0f, 1.0f, 0.0f));//Aplicamos la rotación del codo 
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); //Nos movemos una unidad para llegar al centro de la figura 
+		model = glm::scale(model, glm::vec3(0.7f, 0.3f, 0.15f)); //Ancho, Altura y profundidad 
+		color = glm::vec3(1.0f, 0.0f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//E
 
+	
 		glBindVertexArray(0);
 		
 		// Swap the screen buffers
@@ -316,34 +408,56 @@ int main() {
 		 rot += 0.18f;
 	 if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 		 rot -= 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+	 if (glfwGetKey(window, GLFW_KEY_B) == GLFW_PRESS)
 		 hombro += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+	 if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
 		 hombro -= 0.18f;
+
+	 if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+		 codo += 1.0f;
+	 if (codo > 90.0f) codo = 90.0f;
+	 if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+		 codo -= 1.0f;
+	 if (codo < 0.0f) codo = 0.0f;
+
+
 	 if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-		 codo += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-		 codo -= 0.18f;
+		 muneca += 1.0f;
+	 if (muneca > 90.0f) muneca = 90.0f;
 	 if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-		 muneca += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
-		 muneca -= 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
-		 dedo1 += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) 
-		 dedo1 -=  0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
-		 dedo2 += 0.18f;
+		 muneca -= 1.0f;
+	 if (muneca < 0.0f) muneca = 0.0f;
+
+
 	 if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
-		 dedo2 -= 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
-		 dedo3 += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS)
-		 dedo3 -= 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_O) == GLFW_PRESS)
-		 dedo4 += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_M) == GLFW_PRESS)
-		 dedo4 -= 0.18f;
+		 dedo1 += 1.0f;
+	 if (dedo1 > 90.0f) dedo1 = 90.0f;
+	 if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+		 dedo1 -= 1.0f;
+	 if (dedo1 < 0.0f) dedo1 = 0.0f;
+
+	 if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+		 dedo2 += 100.0f;
+	 if (dedo2 > 0.0f) dedo2 = 0.0f;
+	 if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		 dedo2 -= 1.0f;
+	 if (dedo2 < -90.0f) dedo2 = -90.0f;
+	 
+	
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
